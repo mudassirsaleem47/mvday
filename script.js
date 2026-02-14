@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ... (rest of helper functions remain the same) ...
 
     startBtn.addEventListener('click', () => {
+        playSound('click');
         music.play().catch(e => console.log("Music play failed:", e));
         switchScene(2);
         runScene2();
@@ -70,16 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     nextBtn.addEventListener('click', () => {
+        playSound('click');
         switchScene('2-1');
     });
 
     // --- Scene 2.1 & 2.2 Logic ---
     btn2_1.addEventListener('click', () => {
+        playSound('click');
         switchScene('2-2');
     });
 
     btn2_2.addEventListener('click', () => {
-    // Initialize Suspense Journey
+        playSound('click');
+        // Initialize Suspense Journey
         suspenseText.innerText = suspenseJourney[0].q;
         suspenseBtn.innerText = suspenseJourney[0].b;
         suspenseIndex = 1; 
@@ -89,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Scene 2.5: The Suspense Loop ---
     // --- Scene 2.5: The Suspense Loop ---
     suspenseBtn.addEventListener('click', () => {
+        playSound('pop');
         if (suspenseIndex < suspenseJourney.length) {
             // Fade out
             suspenseText.style.opacity = 0;
@@ -234,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     noBtn.addEventListener('click', evadeNo);
     
     function evadeNo() {
+        playSound('no');
         // 1. Move the button randomly
         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -280,14 +286,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     yesBtn.addEventListener('click', () => {
+        playSound('cheer');
         switchScene(4);
         startConfetti();
         // Launch a barrage of hearts
         setInterval(() => createFloatingEmoji('❤️'), 200);
     });
 
+    // --- Sound Effects (Web Audio API) ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        if (type === 'click') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        } else if (type === 'pop') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        } else if (type === 'no') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+            gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+        } else if (type === 'cheer') {
+            // Simple chord
+            [400, 500, 600].forEach((freq, i) => {
+                const o = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o.connect(g);
+                g.connect(audioCtx.destination);
+                o.frequency.value = freq;
+                g.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+                o.start(audioCtx.currentTime + i * 0.1);
+                o.stop(audioCtx.currentTime + 1 + i * 0.1);
+            });
+        }
+    }
+
     // Audio Playback (Optional Mock)
     function playMusic() {
+        // Try to resume context first
+        if (audioCtx.state === 'suspended') audioCtx.resume();
         const audio = document.getElementById('bg-music');
         if(audio) {
             audio.play().catch(e => console.log("Audio play failed (needs interaction):", e));

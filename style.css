@@ -89,22 +89,7 @@ button:hover {
     display: none !important;
 }
 
-/* Scene Styling */
-.scene {
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    display: none; /* hidden by default */
-}
-
-/* Helper class to make it exist in DOM for fade in */
-.scene.visible {
-    display: block;
-}
-
-/* Helper class to trigger the fade */
-.scene.active {
-    opacity: 1;
-}
+/* Old Scene rules removed */
 
 /* Intro Text Typing Cursor */
 .typing-text::after {
@@ -122,14 +107,37 @@ button:hover {
     z-index: 10;
     width: 100%;
     max-width: 600px;
+    height: 100vh;
+        /* Full viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Scene Styling */
+    .scene {
+        position: absolute;
+        /* Stack them on top of each other */
+        width: 100%;
     padding: 20px;
-    display: flex; /* Center content vertically too */
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100vh; /* Ensure full height on mobile */
+    opacity: 0;
+        transition: opacity 0.8s ease-in-out, transform 0.8s ease;
+        display: none;
+        /* hidden by default */
+        transform: scale(0.95);
+        /* Slight zoom out default */
 }
 
-/* CSS Rose Animation */
+/* Helper class to make it exist in DOM for fade in */
+.scene.visible {
+    display: block;
+}
+
+/* Helper class to trigger the fade */
+.scene.active {
+    opacity: 1;
+    transform: scale(1);
+}
 .rose-container {
     position: relative;
     width: 100px;

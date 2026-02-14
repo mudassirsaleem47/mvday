@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '2-1': document.getElementById('scene2-1'),
         '2-2': document.getElementById('scene2-2'),
         '2.5': document.getElementById('scene2-5'),
+        'meter': document.getElementById('scene-meter'),
         3: document.getElementById('scene3'),
         4: document.getElementById('scene4')
     };
@@ -16,6 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Scene 2.5 Elements ---
     const suspenseText = document.getElementById('suspense-text');
     const suspenseBtn = document.getElementById('suspense-btn');
+
+    // --- Love Meter Elements ---
+    const meterFill = document.getElementById('progress-fill');
+    const meterText = document.getElementById('meter-text');
+    const meterPercent = document.getElementById('meter-percent');
 
     // New Scene Buttons
     const btn2_1 = document.getElementById('btn-2-1');
@@ -111,9 +117,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 suspenseIndex++;
             }, 300);
         } else {
-            switchScene(3);
+            // Go to Meter Scene instead of Scene 3
+            switchScene('meter');
+            runMeter();
         }
     });
+
+    // --- Love Meter Logic ---
+    function runMeter() {
+        let progress = 0;
+        const messages = [
+            "Scanning Cuteness...",
+            "Analyzing Smile...",
+            "Checking Chemistry...",
+            "Detecting Pure Love...",
+            "Measuring Heartbeat...",
+            "Calculation Complete!"
+        ];
+
+        // Reset meter
+        meterFill.style.width = '0%';
+        meterPercent.innerText = '0%';
+        meterText.innerText = messages[0];
+
+        const interval = setInterval(() => {
+            progress += Math.floor(Math.random() * 2) + 1; // Slow increment
+            if (progress > 100) progress = 100;
+
+            meterFill.style.width = `${progress}%`;
+            meterPercent.innerText = `${progress}%`;
+
+            // Change message randomly
+            if (progress % 20 === 0 && progress < 90) {
+                const msg = messages[Math.floor(Math.random() * (messages.length - 1))];
+                meterText.innerText = msg;
+            }
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                meterText.innerText = "Match Found! ❤️";
+                playSound('cheer');
+                setTimeout(() => {
+                    switchScene(3);
+                }, 2000); // 2s delay after completion
+            }
+        }, 50); // Speed of update
+    }
 
     // --- Scene 3: The Question (with Rose) ---
     function typeWriter(text, element, speed = 100, callback) {
@@ -288,9 +337,22 @@ document.addEventListener('DOMContentLoaded', () => {
     yesBtn.addEventListener('click', () => {
         playSound('cheer');
         switchScene(4);
+
+        // Burst 1
         startConfetti();
-        // Launch a barrage of hearts
-        setInterval(() => createFloatingEmoji('❤️'), 200);
+
+        // Burst 2
+        setTimeout(startConfetti, 500);
+
+        // Burst 3
+        setTimeout(startConfetti, 1000);
+
+        // Continuous Heart Rain
+        setInterval(() => {
+            createFloatingEmoji('❤️');
+            createFloatingEmoji('💖');
+            createFloatingEmoji('🌹');
+        }, 300);
     });
 
     // --- Sound Effects (Web Audio API) ---

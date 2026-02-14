@@ -138,6 +138,49 @@ button:hover {
     opacity: 1;
     transform: scale(1);
 }
+/* Love Meter Scene */
+.meter-container {
+    width: 80%;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+#progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff4d6d, #ff8fa3);
+    border-radius: 15px;
+    transition: width 0.3s ease-out;
+    box-shadow: 0 0 15px #ff4d6d;
+}
+
+#meter-text {
+    font-size: 1.2rem;
+    color: #ffb3c1;
+    font-style: italic;
+    min-height: 1.5em;
+    /* Prevent jump */
+    margin-bottom: 10px;
+}
+
+#meter-percent {
+    font-size: 3rem;
+    font-family: 'Dancing Script', cursive;
+    color: #fff;
+    text-shadow: 0 0 10px #ff4d6d;
+}
 .rose-container {
     position: relative;
     width: 100px;

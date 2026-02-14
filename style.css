@@ -1,0 +1,267 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0f0f1a; /* Dark romantic theme */
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
+    z-index: -1;
+    animation: twinkle 200s linear infinite;
+}
+
+@keyframes twinkle {
+    from { background-position: 0 0, 40px 60px, 130px 270px; }
+    to { background-position: 550px 550px, 390px 410px, 380px 520px; }
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* Typography */
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.highlight {
+    color: #ff4d6d;
+    font-weight: bold;
+}
+
+/* Buttons */
+button {
+    background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+    border: none;
+    padding: 12px 30px;
+    color: white;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.6);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Scene Styling */
+.scene {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: none; /* hidden by default */
+}
+
+/* Helper class to make it exist in DOM for fade in */
+.scene.visible {
+    display: block;
+}
+
+/* Helper class to trigger the fade */
+.scene.active {
+    opacity: 1;
+}
+
+/* Intro Text Typing Cursor */
+.typing-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* Responsive Container */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    display: flex; /* Center content vertically too */
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh; /* Ensure full height on mobile */
+}
+
+/* CSS Rose Animation */
+.rose-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 30px;
+    perspective: 1000px;
+}
+
+.rose-petal {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #d62d2d;
+    border-radius: 50% 50% 0 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom right;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    animation: bloom 3s infinite ease-in-out alternate;
+}
+
+.rose-petal:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); animation-delay: 0s; }
+.rose-petal:nth-child(2) { transform: translate(-55%, -55%) rotate(120deg); animation-delay: 0.2s; background: #c21a1a; }
+.rose-petal:nth-child(3) { transform: translate(-45%, -55%) rotate(200deg); animation-delay: 0.4s; background: #a81212; }
+.rose-petal:nth-child(4) { transform: translate(-50%, -60%) rotate(280deg); animation-delay: 0.6s; background: #ff4d6d; }
+
+.rose-stem {
+    position: absolute;
+    width: 4px;
+    height: 60px;
+    background: #2d6a4f;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.rose-leaf {
+    position: absolute;
+    width: 20px;
+    height: 10px;
+    background: #40916c;
+    border-radius: 0 50% 0 50%;
+    bottom: 0;
+    left: 50%;
+}
+.rose-leaf.left { transform: translateX(-15px) rotate(-20deg); }
+.rose-leaf.right { transform: translateX(2px) rotate(20deg) scaleX(-1); }
+
+@keyframes bloom {
+    0% { transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(0.9); }
+    100% { transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(1.1); }
+}
+
+/* Mobile Tweaks */
+@media (max-width: 400px) {
+    h1 { font-size: 2rem; }
+    p { font-size: 1rem; }
+    button { padding: 10px 20px; font-size: 1rem; }
+    .heart-container { transform: scale(0.8); }
+    .rose-container { transform: scale(0.8); }
+}
+
+/* Suspense Loop Styling */
+#suspense-text,
+#suspense-btn {
+    transition: opacity 0.3s ease;
+}
+/* Glow Text */
+.glow-text {
+    animation: glow 2s ease-in-out infinite alternate;
+    text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d; }
+    to { text-shadow: 0 0 20px #ff8fa3, 0 0 30px #ff8fa3; }
+}
+
+/* Love Letter Card */
+.love-letter {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 30px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 1s forwards 0.5s;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Yes/No Buttons */
+/* Yes/No Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    z-index: 100;
+}
+
+#yes-btn {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy growth */
+    z-index: 200;
+}
+
+#no-btn {
+    background: #555;
+    position: relative; 
+    transition: left 0.2s ease, top 0.2s ease; /* Smooth glide */
+}
+
+/* Make sure text doesn't overflow if button is small */
+button {
+    white-space: nowrap;
+}
+
+/* Canvas Confetti */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}

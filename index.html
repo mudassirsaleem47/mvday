@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Maria ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Audio Element (User can replace src) -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+        <!-- Scene 1: Suspense Intro -->
+        <div id="scene1" class="scene">
+            <h1 class="typing-text" id="intro-text"></h1>
+            <button id="start-btn" class="hidden">Click Me</button>
+        </div>
+
+        <!-- Scene 2: The Build Up -->
+        <div id="scene2" class="scene hidden">
+            <!-- CSS Heart was removed, replaced with just text here -->
+             <h1 id="message-text">Listen closely...</h1>
+            <button id="next-btn" class="hidden">Continue</button>
+        </div>
+        
+        <!-- Scene 2.5: The Suspense Loop -->
+        <div id="scene2-5" class="scene hidden">
+            <h1 id="suspense-text" class="glow-text">Are you ready?</h1>
+            <button id="suspense-btn">Yes</button>
+        </div>
+
+        <!-- Scene 3: The Big Question -->
+        <div id="scene3" class="scene hidden">
+            <!-- The Rose -->
+            <div class="rose-container">
+                <div class="rose-petal" style="--r: 0deg;"></div>
+                <div class="rose-petal" style="--r: 90deg;"></div>
+                <div class="rose-petal" style="--r: 180deg;"></div>
+                <div class="rose-petal" style="--r: 270deg;"></div>
+                <div class="rose-stem"></div>
+                <div class="rose-leaf left"></div>
+                <div class="rose-leaf right"></div>
+            </div>
+            
+            <h1 class="glow-text">Will you be my Valentine?</h1>
+            <div class="love-letter">
+                <p>Dear <span class="highlight">Maria</span>,</p>
+                <p>You make my world brighter. Every day with you is special.</p>
+                <p>- <span class="highlight">Mudassir</span></p>
+            </div>
+            
+            <div class="buttons">
+                <button id="yes-btn">YES! ❤️</button>
+                <button id="no-btn">No 😢</button>
+            </div>
+        </div>
+
+        <!-- Scene 4: Celebration -->
+        <div id="scene4" class="scene hidden">
+            <h1 class="celebrate-text">Yay! I Love You Maria! ❤️</h1>
+            <p>Best Valentine ever!</p>
+            <div class="gallery">
+                <!-- Add photos here later if you want -->
+            </div>
+            <button onclick="location.reload()">Replay</button>
+        </div>
+    </div>
+
+    <!-- Celebration Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scenes = {
         1: document.getElementById('scene1'),
         2: document.getElementById('scene2'),
+        '2-1': document.getElementById('scene2-1'),
+        '2-2': document.getElementById('scene2-2'),
         '2.5': document.getElementById('scene2-5'),
         3: document.getElementById('scene3'),
         4: document.getElementById('scene4')
@@ -14,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Scene 2.5 Elements ---
     const suspenseText = document.getElementById('suspense-text');
     const suspenseBtn = document.getElementById('suspense-btn');
+
+    // New Scene Buttons
+    const btn2_1 = document.getElementById('btn-2-1');
+    const btn2_2 = document.getElementById('btn-2-2');
 
     const introText = document.getElementById('intro-text');
     const startBtn = document.getElementById('start-btn');
@@ -28,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Suspense Journey (Question + Button Text) ---
     const suspenseJourney = [
-        { q: "Are you ready?", b: "Yes, I am!" },
-        { q: "Are you really, really ready?", b: "Totally Ready!" },
-        { q: "This is very important...", b: "Okay, tell me!" },
-        { q: "Do you trust me?", b: "With all my heart ❤️" },
-        { q: "Pakka?", b: "100% Pakka!" },
-        { q: "Promise you won't laugh?", b: "I Promise 🤞" },
-        { q: "Close your eyes... (cheat mat karna)", b: "Eyes Closed 🙈" },
+        { q: "Are you ready, my love? 🌹", b: "Yes, I am!" },
+        { q: "Are you really, really ready? 😲", b: "Totally Ready!" },
+        { q: "This is specifically for you, Meri Jaan...", b: "Okay, tell me!" },
+        { q: "Do you trust your Mudassir?", b: "With all my heart ❤️" },
+        { q: "Pakka? Soch lo ek baar aur! 😉", b: "100% Pakka!" },
+        { q: "Promise you won't laugh, Cutie?", b: "I Promise 🤞" },
+        { q: "Close your lovely eyes... (no cheating!)", b: "Eyes Closed 🙈" },
         { q: "Okay, open them in 3... 2... 1...", b: "Show me! 😍" }
     ];
 
@@ -64,10 +70,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     nextBtn.addEventListener('click', () => {
-        // Initialize first question
+        switchScene('2-1');
+    });
+
+    // --- Scene 2.1 & 2.2 Logic ---
+    btn2_1.addEventListener('click', () => {
+        switchScene('2-2');
+    });
+
+    btn2_2.addEventListener('click', () => {
+    // Initialize Suspense Journey
         suspenseText.innerText = suspenseJourney[0].q;
         suspenseBtn.innerText = suspenseJourney[0].b;
-        suspenseIndex = 1;
+        suspenseIndex = 1; 
         switchScene('2.5');
     });
 
